@@ -69,6 +69,7 @@
       cursor: pointer;
       font-family: 'Creepster', cursive;
       transition: background-color 0.3s;
+      margin-top: 10px;
     }
 
     button:hover {
@@ -79,6 +80,12 @@
       margin-top: 20px;
       font-size: 22px;
       color: #ffaaff;
+    }
+
+    #attempts {
+      font-size: 18px;
+      margin-top: 10px;
+      color: #dddddd;
     }
 
     .emoji {
@@ -110,20 +117,25 @@
 
   <script>
     const randomNumber = Math.floor(Math.random() * 100) + 1;
+    let attempts = 0;
 
     function checkNumber() {
       const input = parseInt(document.getElementById("inputnumber").value);
       let result;
       if (isNaN(input)) {
         result = "🧠 Enter a number, mortal!";
-      } else if (input === randomNumber) {
-        result = "🎯 Boo! You guessed it! 👻";
-      } else if (input < randomNumber) {
-        result = "📉 Too low... the ghost laughs 😈";
       } else {
-        result = "📈 Too high... the shadows whisper 🔮";
+        attempts++;
+        if (input === randomNumber) {
+          result = "🎯 Boo! You guessed it! 👻";
+        } else if (input < randomNumber) {
+          result = "📉 Too low... the ghost laughs 😈";
+        } else {
+          result = "📈 Too high... the shadows whisper 🔮";
+        }
       }
       document.getElementById("result").textContent = result;
+      document.getElementById("attempts").textContent = `Tries: ${attempts}`;
     }
 
     function spawnRainNumbers() {
@@ -131,15 +143,16 @@
         const drop = document.createElement("div");
         drop.classList.add("raindrop");
         drop.textContent = Math.floor(Math.random() * 100) + 1;
-
-        // Random horizontal position and speed
         drop.style.left = Math.random() * 100 + "vw";
         drop.style.fontSize = Math.random() * 12 + 14 + "px";
         drop.style.animationDuration = Math.random() * 3 + 2 + "s";
         drop.style.animationDelay = Math.random() * 5 + "s";
-
         document.body.appendChild(drop);
       }
+    }
+
+    function reloadGame() {
+      location.reload();
     }
 
     window.onload = spawnRainNumbers;
@@ -152,6 +165,8 @@
     <input type="number" id="inputnumber" placeholder="Enter your number..." />
     <button onclick="checkNumber()">Summon the Answer</button>
     <p id="result"></p>
+    <p id="attempts">Tries: 0</p>
+    <button onclick="reloadGame()">🔁 Play Again</button>
     <div class="emoji">🧛‍♂️🧟‍♀️🦇</div>
   </div>
 </body>
