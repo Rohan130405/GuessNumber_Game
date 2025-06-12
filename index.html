@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>👻 Ghost Number Game</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Creepster', cursive;
+      background: radial-gradient(circle at center, #1c1c1c, #000000);
+      color: #f5f5f5;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      background-color: rgba(0, 0, 0, 0.85);
+      border: 2px solid #990000;
+      box-shadow: 0 0 20px #ff0000;
+      padding: 40px;
+      border-radius: 15px;
+      text-align: center;
+      width: 350px;
+      animation: pulse 3s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 20px #ff0000; }
+      50% { box-shadow: 0 0 40px #cc0000; }
+    }
+
+    h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #ff4444;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      border: 2px solid #cc0000;
+      border-radius: 10px;
+      background-color: #222;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      background-color: #cc0000;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'Creepster', cursive;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #ff0000;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 22px;
+      color: #ffaaff;
+    }
+
+    .emoji {
+      font-size: 30px;
+      margin: 10px;
+    }
+
+    .raindrop {
+      position: absolute;
+      top: -10%;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 16px;
+      animation: rainDrop linear infinite;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    @keyframes rainDrop {
+      0% {
+        transform: translateY(0);
+        opacity: 0.2;
+      }
+      100% {
+        transform: translateY(120vh);
+        opacity: 0;
+      }
+    }
+  </style>
+
+  <script>
+    const randomNumber = Math.floor(Math.random() * 100) + 1;
+
+    function checkNumber() {
+      const input = parseInt(document.getElementById("inputnumber").value);
+      let result;
+      if (isNaN(input)) {
+        result = "🧠 Enter a number, mortal!";
+      } else if (input === randomNumber) {
+        result = "🎯 Boo! You guessed it! 👻";
+      } else if (input < randomNumber) {
+        result = "📉 Too low... the ghost laughs 😈";
+      } else {
+        result = "📈 Too high... the shadows whisper 🔮";
+      }
+      document.getElementById("result").textContent = result;
+    }
+
+    function spawnRainNumbers() {
+      for (let i = 0; i < 80; i++) {
+        const drop = document.createElement("div");
+        drop.classList.add("raindrop");
+        drop.textContent = Math.floor(Math.random() * 100) + 1;
+
+        // Random horizontal position and speed
+        drop.style.left = Math.random() * 100 + "vw";
+        drop.style.fontSize = Math.random() * 12 + 14 + "px";
+        drop.style.animationDuration = Math.random() * 3 + 2 + "s";
+        drop.style.animationDelay = Math.random() * 5 + "s";
+
+        document.body.appendChild(drop);
+      }
+    }
+
+    window.onload = spawnRainNumbers;
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="emoji">👻💀🕸️</div>
+    <h2>Guess the Ghost's Number</h2>
+    <input type="number" id="inputnumber" placeholder="Enter your number..." />
+    <button onclick="checkNumber()">Summon the Answer</button>
+    <p id="result"></p>
+    <div class="emoji">🧛‍♂️🧟‍♀️🦇</div>
+  </div>
+</body>
+</html>
